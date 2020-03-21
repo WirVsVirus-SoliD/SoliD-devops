@@ -6,29 +6,36 @@ services:
 
 
 
-  #backend:
-    #image: wirvsvirussolid/solid:latest
-    #environment:
-      #VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
-      #LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
-      #VIRTUAL_PORT: ${BACKEND_PORT}
-      #pghost: ${BACKEND_PGHOST}
-      #pgport: ${BACKEND_PGPORT}
-      #pgpasswd: ${BACKEND_PGPASSWD}
-      #pguser: ${BACKEND_PGUSER}
-    #expose:
-      #- 8080
-    #depends_on:
-      #- backend-db
+  backend:
+    image: wirvsvirussolid/solid:latest
+    environment:
+      VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${BACKEND_PORT}
+      pghost: ${BACKEND_PGHOST}
+      pgport: ${BACKEND_PGPORT}
+      pgpasswd: ${BACKEND_PGPASSWD}
+      pguser: ${BACKEND_PGUSER}
+    expose:
+      - 8080
+    depends_on:
+      - backend-db
+    networks:
+      - nginx-proxy
+      - backend
+    restart: always
 
-  #backend-db:
-    #image: postgres
-    #environment:
-      #POSTGRES_DB: solid
-      #POSTGRES_USER: ${BACKEND_DB_POSTGRES_USER}
-      #POSTGRES_PASSWORD: ${BACKEND_DB_POSTGRES_PASSWORD}
-    #volumes:
-      #- backend-db-data:/var/lib/postgresql/data
+  backend-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: solid
+      POSTGRES_USER: ${BACKEND_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${BACKEND_DB_POSTGRES_PASSWORD}
+    volumes:
+      - backend-db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    restart: always
 
 
 
@@ -40,6 +47,9 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: ${KEYCLOAK_DB_POSTGRES_USER}
       POSTGRES_PASSWORD: ${KEYCLOAK_DB_POSTGRES_PASSWORD}
+    networks:
+      - keycloak
+    restart: always
     volumes:
       - keycloak-db-data:/var/lib/postgresql/data
 
@@ -57,10 +67,14 @@ services:
       DB_SCHEMA: public
       KEYCLOAK_USER: ${KEYCLOAK_USER}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+    networks:
+      - nginx-proxy
+      - keycloak
     expose:
       - 8080
     depends_on:
       - keycloak-db
+    restart: always
 
 
 
@@ -69,6 +83,8 @@ volumes:
   backend-db-data:
 
 networks:
+  backend:
+  keycloak:
   default:
     external:
       name: nginx-proxy
