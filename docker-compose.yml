@@ -21,6 +21,8 @@ services:
       - backend-network
     expose:
       - 8080
+    depends_on:
+      - backend-db
 
   backend-db:
     image: postgres
