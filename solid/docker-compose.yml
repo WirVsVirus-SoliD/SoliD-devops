@@ -6,29 +6,29 @@ services:
 
 
 
-  backend:
-    image: wirvsvirussolid/solid:latest
-    environment:
-      VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
-      LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
-      VIRTUAL_PORT: ${BACKEND_PORT}
-      pghost: ${BACKEND_PGHOST}
-      pgport: ${BACKEND_PGPORT}
-      pgpasswd: ${BACKEND_PGPASSWD}
-      pguser: ${BACKEND_PGUSER}
-    expose:
-      - 8080
-    depends_on:
-      - backend-db
+  #backend:
+    #image: wirvsvirussolid/solid:latest
+    #environment:
+      #VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
+      #LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
+      #VIRTUAL_PORT: ${BACKEND_PORT}
+      #pghost: ${BACKEND_PGHOST}
+      #pgport: ${BACKEND_PGPORT}
+      #pgpasswd: ${BACKEND_PGPASSWD}
+      #pguser: ${BACKEND_PGUSER}
+    #expose:
+      #- 8080
+    #depends_on:
+      #- backend-db
 
-  backend-db:
-    image: postgres
-    environment:
-      POSTGRES_DB: solid
-      POSTGRES_USER: ${BACKEND_DB_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${BACKEND_DB_POSTGRES_PASSWORD}
-    volumes:
-      - backend-db-data:/var/lib/postgresql/data
+  #backend-db:
+    #image: postgres
+    #environment:
+      #POSTGRES_DB: solid
+      #POSTGRES_USER: ${BACKEND_DB_POSTGRES_USER}
+      #POSTGRES_PASSWORD: ${BACKEND_DB_POSTGRES_PASSWORD}
+    #volumes:
+      #- backend-db-data:/var/lib/postgresql/data
 
 
 
