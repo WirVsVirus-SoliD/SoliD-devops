@@ -9,7 +9,7 @@ RUN apk update && apk add bash
 WORKDIR /app
 
 # set environment
-ENV app_jar=soliD.Parent.Project.jar
+ENV app_jar=soliD.backend.jar
 ENV download_link=https://github.com/WirVsVirus-SoliD/SoliD-backend/releases/latest/download/${app_jar}
 
 # Copy the fat jar into the container at /app
