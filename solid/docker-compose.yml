@@ -85,7 +85,6 @@ volumes:
 networks:
   backend:
   keycloak:
-  default:
-    external:
-      name: nginx-proxy
+  nginx-proxy:
+    external: true
 

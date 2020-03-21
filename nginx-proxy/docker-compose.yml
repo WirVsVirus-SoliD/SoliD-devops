@@ -1,6 +1,10 @@
 version: '2'
 
+
+
 services:
+
+
 
   nginx-proxy:
     image: jwilder/nginx-proxy
@@ -29,12 +33,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: always
 
+
+
 volumes:
   conf:
   vhost:
   html:
   dhparam:
   certs:
+
+
 
 networks:
   default:
