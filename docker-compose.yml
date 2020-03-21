@@ -96,6 +96,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     volumes_from:
       - "nginx-proxy"
+    networks:
+      - nginx-network
 
 
 
