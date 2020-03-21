@@ -19,6 +19,7 @@ services:
     networks:
       - keycloak-network
       - backend-network
+      - nginx-network
     expose:
       - 8080
     depends_on:
@@ -68,6 +69,7 @@ services:
       #JDBC_PARAMS: "ssl=true"
     networks:
       - keycloak-network
+      - nginx-network
     expose:
       - 8080
     depends_on:
@@ -85,6 +87,8 @@ services:
       - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "/etc/nginx/certs"
+    networks:
+      - nginx-network
 
   letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -102,5 +106,6 @@ volumes:
 networks:
   keycloak-network:
   backend-network:
+  nginx-network:
 
 
