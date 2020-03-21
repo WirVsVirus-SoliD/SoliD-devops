@@ -15,8 +15,5 @@ ENV download_link=https://github.com/WirVsVirus-SoliD/SoliD-backend/releases/lat
 # Copy the fat jar into the container at /app
 RUN wget -O app.jar ${download_link}
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
-
 # Run jar file when the container launches
 CMD ["java", "-jar", "app.jar"]

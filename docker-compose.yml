@@ -4,6 +4,16 @@ networks:
   keycloak-network:
 
 services:
+  solid-backend:
+    image: wirvsvirussolid/solid:latest
+    env_file:
+      - .env
+    networks:
+      - keycloak-network
+    expose:
+      - 8081
+    ports:
+      - 8082:8081
 
   keycloak-db:
       image: postgres
