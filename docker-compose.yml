@@ -6,98 +6,98 @@ services:
 
 
 
-  backend:
-    image: wirvsvirussolid/solid:latest
-    environment:
-      VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
-      LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
-      VIRTUAL_PORT: 8080
-      pghost: ${BACKEND_PGHOST}
-      pgport: ${BACKEND_PGPORT}
-      pgpasswd: ${BACKEND_PGPASSWD}
-      pguser: ${BACKEND_PGUSER}
-    networks:
-      - keycloak-network
-      - backend-network
-      - nginx-network
-    expose:
-      - 8080
-    depends_on:
-      - backend-db
-
-  backend-db:
-    image: postgres
-    environment:
-      POSTGRES_DB: solid
-      POSTGRES_USER: ${BACKEND_DB_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${BACKEND_DB_POSTGRES_PASSWORD}
-    networks:
-      - backend-network
-    volumes:
-      - backend-db-data:/var/lib/postgresql/data
-
-
-
-  #keycloak-db:
-    #image: postgres
-    #env_file:
-      #- .env
+  #backend:
+    #image: wirvsvirussolid/solid:latest
     #environment:
-      #POSTGRES_DB: keycloak
-      #POSTGRES_USER: ${KEYCLOAK_DB_POSTGRES_USER}
-      #POSTGRES_PASSWORD: ${KEYCLOAK_DB_POSTGRES_PASSWORD}
-    #networks:
-      #- keycloak-network
-    #volumes:
-      #- keycloak-db-data:/var/lib/postgresql/data
-
-  #keycloak:
-    #image: jboss/keycloak
-    #environment:
-      #VIRTUAL_HOST: ${KEYCLOAK_VIRTUAL_HOST}
-      #LETSENCRYPT_HOST: ${KEYCLOAK_VIRTUAL_HOST}
+      #VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
+      #LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
       #VIRTUAL_PORT: 8080
-      #DB_VENDOR: POSTGRES
-      #DB_ADDR: keycloak-db
-      #DB_DATABASE: keycloak
-      #DB_USER: ${KEYCLOAK_DB_USER}
-      #DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
-      #DB_SCHEMA: public
-      #KEYCLOAK_USER: ${KEYCLOAK_USER}
-      #KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
-      ## Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-      ##JDBC_PARAMS: "ssl=true"
+      #pghost: ${BACKEND_PGHOST}
+      #pgport: ${BACKEND_PGPORT}
+      #pgpasswd: ${BACKEND_PGPASSWD}
+      #pguser: ${BACKEND_PGUSER}
     #networks:
       #- keycloak-network
+      #- backend-network
       #- nginx-network
     #expose:
       #- 8080
     #depends_on:
-      #- keycloak-db
+      #- backend-db
 
-
-
-  #nginx-proxy:
-    #image: jwilder/nginx-proxy
-    #ports:
-      #- "80:80"
-      #- "443:443"
-    #volumes:
-      #- "/etc/nginx/vhost.d"
-      #- "/usr/share/nginx/html"
-      #- "/var/run/docker.sock:/tmp/docker.sock:ro"
-      #- "/etc/nginx/certs"
+  #backend-db:
+    #image: postgres
+    #environment:
+      #POSTGRES_DB: solid
+      #POSTGRES_USER: ${BACKEND_DB_POSTGRES_USER}
+      #POSTGRES_PASSWORD: ${BACKEND_DB_POSTGRES_PASSWORD}
     #networks:
-      #- nginx-network
-
-  #letsencrypt-nginx-proxy-companion:
-    #image: jrcs/letsencrypt-nginx-proxy-companion
+      #- backend-network
     #volumes:
-      #- "/var/run/docker.sock:/var/run/docker.sock:ro"
-    #volumes_from:
-      #- "nginx-proxy"
-    #networks:
-      #- nginx-network
+      #- backend-db-data:/var/lib/postgresql/data
+
+
+
+  keycloak-db:
+    image: postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${KEYCLOAK_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${KEYCLOAK_DB_POSTGRES_PASSWORD}
+    networks:
+      - keycloak-network
+    volumes:
+      - keycloak-db-data:/var/lib/postgresql/data
+
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      VIRTUAL_HOST: ${KEYCLOAK_VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${KEYCLOAK_VIRTUAL_HOST}
+      VIRTUAL_PORT: 8080
+      DB_VENDOR: POSTGRES
+      DB_ADDR: keycloak-db
+      DB_DATABASE: keycloak
+      DB_USER: ${KEYCLOAK_DB_USER}
+      DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+      DB_SCHEMA: public
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    networks:
+      - keycloak-network
+      - nginx-network
+    expose:
+      - 8080
+    depends_on:
+      - keycloak-db
+
+
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/etc/nginx/vhost.d"
+      - "/usr/share/nginx/html"
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "/etc/nginx/certs"
+    networks:
+      - nginx-network
+
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    volumes_from:
+      - "nginx-proxy"
+    networks:
+      - nginx-network
 
 
 
