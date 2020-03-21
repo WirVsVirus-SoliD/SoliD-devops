@@ -9,3 +9,5 @@ steps:
   inputs:
     command: buildAndPush
     repository: wirvsvirussolid/solid
+    tags: |
+      latest
