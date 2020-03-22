@@ -28,6 +28,6 @@ stages:
                 targetType: 'inline'
                 workingDirectory: $(app_rootdir)
                 script: |
+                  sudo chown -R $(user):$(user) $(app_rootdir)
                   git stash && git pull
-                  chown -R $(user):$(user) $(app_rootdir)
 
