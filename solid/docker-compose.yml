@@ -9,13 +9,14 @@ services:
   backend:
     image: wirvsvirussolid/solid:latest
     environment:
-      VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
+      geocodeKey: ${BACKEND_GEOCODEKEY}
       LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
-      VIRTUAL_PORT: ${BACKEND_PORT}
       pghost: ${BACKEND_PGHOST}
       pgport: ${BACKEND_PGPORT}
       pgpasswd: ${BACKEND_PGPASSWD}
       pguser: ${BACKEND_PGUSER}
+      VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${BACKEND_PORT}
     expose:
       - 8080
     depends_on:
