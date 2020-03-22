@@ -1,23 +1,31 @@
+variables:
+  solid_url: https://github.com/WirVsVirus-SoliD/SoliD-devops
+  app_rootdir: /opt/solid
+
 trigger:
+  branches:
+     include:
+     - master
   tags:
     include:
     - v*.*
-jobs:
-- deployment: VMDeploy
-  displayName: web
-  environment:
-    name: SoliD
-    resourceType: VirtualMachine
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - task: Bash@3
-          inputs:
-            targetType: 'inline'
-            workingDirectory: /opt/solid/solid
-            script: |
-              sudo docker-compose stop backend
-              sudo docker-compose pull --parallel
-              sudo docker-compose up -d --no-deps backend
+
+stages:
+  - stage: updateRepos 
+    jobs:
+    - deployment: VMDeploy
+      displayName: update repos
+      environment:
+        name: SoliD
+        resourceType: VirtualMachine
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                workingDirectory: $(app_rootdir)
+                script: |
+                  git stash && git pull
 
