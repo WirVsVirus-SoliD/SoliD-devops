@@ -67,6 +67,7 @@ services:
       DB_SCHEMA: public
       KEYCLOAK_USER: ${KEYCLOAK_USER}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      PROXY_ADDRESS_FORWARDING: "true"
     networks:
       - nginx-proxy
       - keycloak
