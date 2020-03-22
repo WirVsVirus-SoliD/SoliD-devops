@@ -17,4 +17,4 @@ jobs:
             targetType: 'inline'
             workingDirectory: /opt/solid/solid
             script: |
-              echo my first deployment > test.txt
+              sudo echo my first deployment > test.txt
