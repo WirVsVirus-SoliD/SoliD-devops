@@ -17,4 +17,7 @@ jobs:
             targetType: 'inline'
             workingDirectory: /opt/solid/solid
             script: |
-              sudo echo my first deployment > test.txt
+              sudo docker-compose stop backend
+              sudo docker-compose pull --parallel
+              docker-compose up -d --no-deps backend
+
