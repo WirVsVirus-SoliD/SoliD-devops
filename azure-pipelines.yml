@@ -1,6 +1,7 @@
 variables:
   solid_url: https://github.com/WirVsVirus-SoliD/SoliD-devops
   app_rootdir: /opt/solid
+  user: azureuser
 
 trigger:
   branches:
@@ -28,4 +29,5 @@ stages:
                 workingDirectory: $(app_rootdir)
                 script: |
                   git stash && git pull
+                  chown -R $(user):$(user) $(app_rootdir)
 
