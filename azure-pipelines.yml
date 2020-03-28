@@ -1,7 +1,7 @@
 variables:
   solid_url: https://github.com/WirVsVirus-SoliD/SoliD-devops
   app_rootdir: /opt/solid
-  user: azureuser
+  user: root 
 
 trigger:
   branches:
