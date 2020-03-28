@@ -64,7 +64,6 @@ services:
 
 volumes:
   db-data:
-  db-date:
   wp-data:
 
 networks:
