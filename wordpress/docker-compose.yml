@@ -30,7 +30,6 @@ services:
       - wp
     networks:
       - backend
-    restart: always
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - wp-data:/var/www/html
