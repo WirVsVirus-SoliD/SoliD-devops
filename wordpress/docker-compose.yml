@@ -16,8 +16,8 @@ services:
     ports:
       - 8080:80
     networks:
-      - front
-      - back
+      - nginx-proxy
+      - backend
     depends_on:
       - db
     restart: always
@@ -31,7 +31,7 @@ services:
       - db
       - wp
     networks:
-      - back
+      - backend
     restart: always
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
@@ -45,7 +45,7 @@ services:
       MYSQL_PASSWORD: "${DB_PASSWORD:-password}"
       MYSQL_DATABASE: "${DB_NAME:-wordpress}"
     networks:
-      - back
+      - backend
     restart: always
     volumes:
       - ./config:/docker-entrypoint-initdb.d
@@ -61,7 +61,8 @@ services:
     expose:
       - 8080
     networks:
-      - back
+      - backend
+      - nginx-proxy
     restart: always
 
 volumes:
@@ -69,5 +70,6 @@ volumes:
   wp-data:
 
 networks:
-  front:
-  back:
+  backend:
+  nginx-proxy:
+    external: true
