@@ -63,7 +63,7 @@ services:
     restart: always
 
 volumes:
-  db-date:
+  db-data:
   wp-data:
 
 networks:
