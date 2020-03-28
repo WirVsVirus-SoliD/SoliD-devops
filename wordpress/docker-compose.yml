@@ -46,7 +46,7 @@ services:
     restart: always
     volumes:
       - ./config:/docker-entrypoint-initdb.d
-      - db-date:/var/lib/mysql
+      - db-data:/var/lib/mysql
 
   adminer:
     image: adminer
