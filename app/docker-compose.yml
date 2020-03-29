@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+
+  app:
+    image: wirvsvirussolid/solid:app
+      LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
+      VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
+    expose:
+      - 80
+    networks:
+      - nginx-proxy
+    restart: always
+
+networks:
+  nginx-proxy:
+    external: true
