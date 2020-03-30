@@ -3,7 +3,7 @@ version: '2'
 services:
 
   app:
-    image: wirvsvirussolid/solid:app
+    image: wirvsvirussolid/solid:app-${APP_BRANCH}
     environment:
       LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
       VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
