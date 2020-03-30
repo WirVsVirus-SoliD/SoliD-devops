@@ -4,6 +4,7 @@ services:
 
   app:
     image: wirvsvirussolid/solid:app
+    environment:
       LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
       VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
     expose:
