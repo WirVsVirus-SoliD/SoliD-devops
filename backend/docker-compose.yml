@@ -6,7 +6,7 @@ services:
 
 
   backend:
-    image: wirvsvirussolid/solid:backend-${APP_BRANCH}
+    image: wirvsvirussolid/solid:backend-${BACKEND_BRANCH}
     environment:
       geocodeKey: ${BACKEND_GEOCODEKEY}
       LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
