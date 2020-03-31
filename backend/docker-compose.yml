@@ -1,0 +1,44 @@
+version: '2'
+
+
+
+services:
+
+
+  backend:
+    image: wirvsvirussolid/solid:backend-${APP_BRANCH}
+    environment:
+      geocodeKey: ${BACKEND_GEOCODEKEY}
+      LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
+      pghost: ${BACKEND_PGHOST}
+      pgport: ${BACKEND_PGPORT}
+      pgpasswd: ${BACKEND_PGPASSWD}
+      pguser: ${BACKEND_PGUSER}
+      VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${BACKEND_PORT}
+    depends_on:
+      - backend-db
+    networks:
+      - nginx-proxy
+      - backend
+    restart: always
+
+  backend-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: solid
+      POSTGRES_USER: ${BACKEND_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${BACKEND_DB_POSTGRES_PASSWORD}
+    volumes:
+      - backend-db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    restart: always
+
+volumes:
+  backend-db-data:
+
+networks:
+  backend:
+  nginx-proxy:
+    external: true
