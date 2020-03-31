@@ -32,6 +32,7 @@ services:
       KEYCLOAK_USER: ${KEYCLOAK_USER}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
       PROXY_ADDRESS_FORWARDING: "true"
+      VIRTUAL_PORT: 8080
     networks:
       - nginx-proxy
       - keycloak
