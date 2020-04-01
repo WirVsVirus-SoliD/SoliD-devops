@@ -19,6 +19,8 @@ services:
       VIRTUAL_PORT: ${BACKEND_PORT}
     depends_on:
       - backend-db
+    expose:
+      - 8080
     networks:
       - nginx-proxy
       - backend
