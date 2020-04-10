@@ -15,12 +15,15 @@ services:
       pgport: ${BACKEND_PGPORT}
       pgpasswd: ${BACKEND_PGPASSWD}
       pguser: ${BACKEND_PGUSER}
+      keycloak.useradmin.login: ${KEYCLOAK_USERADMIN_LOGIN}
+      keycloak.useradmin.passwd: ${KEYCLOAK_USERADMIN_PASSWD}
+      keycloak.server.url: ${KEYCLOAK_SERVER_URL}
       VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
       VIRTUAL_PORT: ${BACKEND_PORT}
     depends_on:
       - backend-db
     expose:
-      - 8080
+      - ${BACKEND_PORT}
     networks:
       - nginx-proxy
       - backend
