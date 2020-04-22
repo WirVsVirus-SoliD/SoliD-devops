@@ -9,15 +9,17 @@ services:
     image: wirvsvirussolid/solid:backend-${BACKEND_BRANCH}
     environment:
       geocodeKey: ${BACKEND_GEOCODEKEY}
+      keycloak.server.url: ${KEYCLOAK_SERVER_URL}
+      keycloak.server.url: ${KEYCLOAK_SERVER_URL}
       keycloak-secret: ${BACKEND_KEYCLOAK_SECRET}
+      keycloak.useradmin.login: ${KEYCLOAK_USERADMIN_LOGIN}
+      keycloak.useradmin.passwd: ${KEYCLOAK_USERADMIN_PASSWD}
       LETSENCRYPT_HOST: ${BACKEND_VIRTUAL_HOST}
       pghost: ${BACKEND_PGHOST}
       pgport: ${BACKEND_PGPORT}
       pgpasswd: ${BACKEND_PGPASSWD}
       pguser: ${BACKEND_PGUSER}
-      keycloak.useradmin.login: ${KEYCLOAK_USERADMIN_LOGIN}
-      keycloak.useradmin.passwd: ${KEYCLOAK_USERADMIN_PASSWD}
-      keycloak.server.url: ${KEYCLOAK_SERVER_URL}
+      quarkus.mailer.password: ${BACKEND_MAILER_PASSWORD}
       VIRTUAL_HOST: ${BACKEND_VIRTUAL_HOST}
       VIRTUAL_PORT: ${BACKEND_PORT}
     depends_on:
