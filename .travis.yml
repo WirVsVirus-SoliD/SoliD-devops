@@ -1,0 +1,42 @@
+os: linux
+dist: bionic
+language: minimal
+
+
+env:
+  global:
+    - REMOTE_SERVER=solid-contabo.malkos.de
+    - SSH_KEY=travis_solid_deploy_key
+    - REPO_URL=https://github.com/WirVsVirus-SoliD/SoliD-devops
+    - ROOTDIR=/opt/solid
+    - USER=root
+
+branches:
+  only:
+  - master
+  - stable
+     
+before_install:
+- openssl aes-256-cbc -K $encrypted_3c4ae5278ddb_key -iv $encrypted_3c4ae5278ddb_iv
+  -in ${SSH_KEY}.enc -out ${SSH_KEY} -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ./${SSH_KEY}
+- ssh-keyscan -H ${REMOTE_SERVER} >> ~/.ssh/known_hosts
+#- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-add ./${SSH_KEY}
+- ssh ${USER}@${REMOTE_SERVER} pwd
+
+install: skip
+
+#git clone ${REPO_URL} ${ROOTDIR}
+#sudo chown -R ${USER}:${user} ${ROOTDIR}
+#git stash && git pull
+
+script: 
+  - >
+    ssh ${USER}@${REMOTE_SERVER} "
+      git clone ${REPO_URL} ${ROOTDIR};
+      sudo chown -R ${USER}:${USER} ${ROOTDIR};
+      cd ${ROOTDIR} && git stash && git pull;
+    "
+
