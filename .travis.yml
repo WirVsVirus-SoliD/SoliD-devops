@@ -37,6 +37,6 @@ script:
     ssh ${USER}@${REMOTE_SERVER} "
       git clone ${REPO_URL} ${ROOTDIR};
       sudo chown -R ${USER}:${USER} ${ROOTDIR};
-      cd ${ROOTDIR} && git stash && git pull;
+      cd ${ROOTDIR} && git stash --include-untracked && git pull;
     "
 
